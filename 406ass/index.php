@@ -11,6 +11,12 @@
     <title>Login</title>
 </head>
 <body>
+<div class="nav">
+        <div class="logo">
+            <p><a href="index.php">Mojo's Dojo</a> </p>
+        </div>
+</div>
+
       <div class="container">
         <div class="box form-box">
             <?php 
@@ -28,7 +34,7 @@
                     $_SESSION['username'] = $row['Username'];
                     $_SESSION['age'] = $row['Age'];
                     $_SESSION['id'] = $row['Id'];
-                    $_SESSION['role'] = $row['role'];
+                    $_SESSION['role'] = $row['Role'];
                 }else{
                     echo "<div class='message'>
                       <p>Wrong Username or Password</p>
@@ -39,6 +45,9 @@
                 if(isset($_SESSION['valid'])){
                     if($_SESSION['role']=="Admin"){
                         header("Location: admin.php");
+                    }
+                    else if($_SESSION['role']=="Coach"){
+                        header("Location: coach.php");
                     }
                     else {
                         header("Location: home.php");
@@ -65,7 +74,7 @@
                     <input type="submit" class="btn" name="submit" value="Login" required>
                 </div>
                 <div class="links">
-                    Don't have account? <a href="register.php">Sign Up Now</a>
+                    New member? <a href="register.php">Sign Up Now</a>
                 </div>
             </form>
         </div>

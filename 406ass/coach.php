@@ -37,9 +37,9 @@
             
             ?>
 
-            <a href="finances.php"><button class="btn">Club Finances</button></a>
             <a href="members.php"><button class="btn">Members</button></a>
-            <a href="php/logout.php"><button class="logbtn">Log Out</button></a>
+            
+            <a href="php/logout.php"> <button class="logbtn">Log Out</button> </a>
 
         </div>
     </div>
@@ -48,10 +48,10 @@
     <div class="main-box top">
           <div class="top">
             <div class="box">
-                <p>Welcome back <b><?php echo $res_Uname ?></b>-kun :3</p>
+                <p>Welcome Sensei <b><?php echo $res_Uname ?></b>-kun :3</p>
             </div>
             <div class="box">
-                <p>We treasure you deeply Mr.Treasurer </p>
+                <p>We missed you </p>
             </div>
           </div>
           <div class="bottom">
@@ -79,7 +79,7 @@
 
             <div id="messageForm" class="message-form">
             <form action="" method="post">
-            <textarea style="font-size: 15pt " rows="2" cols="100" name="message" placeholder="What's on your mind today..." required></textarea>
+            <textarea style="font-size: 15pt " rows="2" cols="100" name="message" placeholder="Whats on your mind today.." required></textarea>
             <button class="btn" type="submit" name="submit" style="width: 100%"> POST </button>
             </form>
             </div>

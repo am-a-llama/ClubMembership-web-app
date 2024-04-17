@@ -33,12 +33,17 @@
                 $res_Email = $result['Email'];
                 $res_Age = $result['Age'];
                 $res_id = $result['Id'];
+                $res_role = $result['Role'];
+                $res_paid = $result['ClassesPaidFor'];
+                $res_attended = $result['ClassesAttended'];
+
+
             }
             
-            echo "<a href='edit.php?Id=$res_id'>Change Profile</a>";
+            echo "<a href='edit.php?Id=$res_id'>Edit Profile</a>";
             ?>
 
-            <a href="php/logout.php"> <button class="logbtn">Log Out</button> </a>
+            <a href="php/logout.php"><button class="logbtn">Log Out</button></a>
 
         </div>
     </div>
@@ -47,18 +52,81 @@
        <div class="main-box top">
           <div class="top">
             <div class="box">
-                <p>Hello <b><?php echo $res_Uname ?></b>, Welcome</p>
+                <p>Hello <b><?php echo $res_Uname ?></b>, Welcome to the Club.</p>
             </div>
             <div class="box">
-                <p>Your email is <b><?php echo $res_Email ?></b>.</p>
+                <p>You have <b><span style="color: red"><?php echo $res_attended ?></b> payments pending.</p>
             </div>
           </div>
           <div class="bottom">
             <div class="box">
-                <p>And you are <b><?php echo $res_Age ?> years old</b>.</p> 
+               <p><h1>Discussion Board</p>
+               <div class="bottom"></div>
+
+
+            
+
+
+            <!-- Message Form -->
+        
+            <?php 
+            include("php/config.php");
+
+            if(isset($_POST['submit'])){
+                $message = mysqli_real_escape_string($con, $_POST['message']);
+
+                $query = "INSERT INTO messages (UserID, Username, Message) VALUES ('$res_id', '$res_Uname', '$message')";
+                $result = mysqli_query($con, $query);
+
+              
+         }
+    
+
+        ?>
+
+            <div id="messageForm" class="message-form">
+            <form action="" method="post">
+            <textarea style="font-size: 15pt " rows="2" cols="100" name="message" placeholder="Whats on your mind today.." required></textarea>
+            <button class="btn" type="submit" name="submit" style="width: 100%"> POST </button>
+            </form>
             </div>
-          </div>
-       </div>
+            </div>
+
+
+            <!-- all of the Communications area -->
+            <div class="bottom">
+                <div class="box">
+                    <?php 
+                    $query = mysqli_query($con, "SELECT messages.*, users.Role FROM messages JOIN users ON messages.Username = users.Username ORDER BY MessageID DESC");
+
+                    // Check if there are messages
+                    if(mysqli_num_rows($query) > 0) {
+                        while($result = mysqli_fetch_assoc($query)){
+                            $res_Uname = $result['Username'];
+                            $message = $result['Message'];
+                            $res_role = $result['Role'];
+                            $messageID = $result['MessageID'];
+
+
+
+                        // coach announcements through different colored textbox
+                        $messageClass = ($res_role == 'Coach') ? 'coach-box' : 'regular-box';
+                        $roleColor = ($res_role == 'Admin') ? 'color: red;' : ''; // Add this line
+
+                        echo "<div class='box $messageClass'>";
+                        echo "<p><b style='$roleColor'>$res_Uname</b> the $res_role says,</p>"; // Modify this line
+                        echo "<p>$message</p>";
+                        echo "<br>";
+                        echo "</div>";
+
+                        }
+                    } else {
+                        echo "<p>No messages yet.</p>";
+                    }
+                    ?>
+                </div>
+                </div>
+
 
     </main>
 </body>
